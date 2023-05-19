@@ -18,7 +18,17 @@
                         <td>{{ $project->name }}</td>
                         <td>{{ $project->major_version }}.{{ $project->minor_version }}.{{ $project->patch_version }}</td>
                         <td>{{ $project->description }}</td>
+                        <td>
+                            <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </form>
+                        </td>
                     </tr>
+                    
                 @endforeach
             </tbody>
         </table>
