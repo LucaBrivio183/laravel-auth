@@ -13,12 +13,13 @@
             </thead>
             <tbody>
                 @foreach ($projects as $project)
-                    <tr onclick="window.location='{{route('admin.projects.show', $project->id)}}'" style="cursor: pointer"> 
+                    <tr> {{-- onclick="window.location='{{route('admin.projects.show', $project->id)}}'" style="cursor: pointer">  --}}
                         <td>{{ $project->id }}</td>
                         <td>{{ $project->name }}</td>
                         <td>{{ $project->major_version }}.{{ $project->minor_version }}.{{ $project->patch_version }}</td>
                         <td>{{ $project->description }}</td>
                         <td>
+                            <a href="{{ route('admin.projects.edit', $project->id) }}" class="btn btn-primary btn-sm">edit</a>
                             <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
