@@ -4,7 +4,7 @@
     <div class="container my-5">
         <a href="{{ route('admin.projects.index') }}" class="btn btn-primary mb-3">My Projects</a>
         <h1 class="mb-3">Edit {{$project->name}}</h1>
-        <form action="{{route('admin.projects.update', $project->id)}}" method="POST">
+        <form action="{{route('admin.projects.update', $project->id)}}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
             <div class="form-group">
@@ -28,15 +28,27 @@
                     @error('patch_version')
                         <div class="alert alert-danger">{{ $message }} </div>
                     @enderror
+
+                <div class="mb-3"  id="image-input-container">
+                    {{-- preview loaded image--}}
+                    <div class="preview">  {{-- @if(!$project->image) d-none @endif --}}
+                        <img id="file-image-preview" @if($project->image) src="{{ asset('storage/' . $project->image) }}" @endif>
+                    </div>
+                    <label for="image" class="form-label">Image</label>
+                    <input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image">
+                </div>
+                @error('image')
+                    <div class="alert alert-danger">{{ $message }} </div>
+                @enderror
+
                 <div class="mb-3">
                     <label for="description" class="form-label">Project description</label>
-                    <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="3">
-                        {{ old('description', $project->description) }}
-                    </textarea>
+                    <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="3">{{ old('description', $project->description) }}</textarea>
                     @error('description')
                         <div class="alert alert-danger">{{ $message }} </div>
                     @enderror
                 </div>
+
             </div> 
             <button type="submit" class="btn btn-primary">Edit</button>
         </form>

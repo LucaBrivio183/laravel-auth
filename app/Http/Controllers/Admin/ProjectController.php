@@ -87,10 +87,18 @@ class ProjectController extends Controller
     {
         $data = $request->validated();
 
-        $project = new Project();
-        $project->fill($data);
         $project->slug = Str::slug($project->name, '-');
-        $project->save();
+
+        if (isset($data['image'])) {
+
+            if ($project->image) {
+                Storage::delete($project->image);
+            }
+
+            $project->image = Storage::put('uploads', $data['image']);
+        };
+
+        $project->update($data);
 
         return to_route('admin.projects.index');
     }

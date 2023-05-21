@@ -30,6 +30,10 @@
                     @enderror
                 
                 <div class="mb-3">
+                    {{-- preview loaded image--}}
+                    <div class="preview">
+                        <img id="file-image-preview">
+                    </div>
                     <label for="image" class="form-label">Image</label>
                     <input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image">
                 </div>

@@ -28,6 +28,7 @@ class UpdateProjectRequest extends FormRequest
             'major_version' => 'required',
             'minor_version' => 'required',
             'patch_version' => 'required',
+            'image' => 'nullable|image|max:2048',
             'description' => 'required',
         ];
     }
