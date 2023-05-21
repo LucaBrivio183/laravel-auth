@@ -89,14 +89,24 @@ class ProjectController extends Controller
 
         $project->slug = Str::slug($project->name, '-');
 
-        if (isset($data['image'])) {
+
+        if (empty($data['set_image'])) {
+
 
             if ($project->image) {
                 Storage::delete($project->image);
+                $project->image = null;
             }
+        } else {
+            if (isset($data['image'])) {
 
-            $project->image = Storage::put('uploads', $data['image']);
-        };
+                if ($project->image) {
+                    Storage::delete($project->image);
+                }
+
+                $project->image = Storage::put('uploads', $data['image']);
+            }
+        }
 
         $project->update($data);
 
@@ -111,6 +121,9 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        if ($project->image) {
+            Storage::delete($project->image);
+        }
         $project->delete();
         return to_route('admin.projects.index');
     }

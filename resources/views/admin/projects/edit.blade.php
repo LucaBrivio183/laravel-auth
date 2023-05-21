@@ -28,8 +28,13 @@
                     @error('patch_version')
                         <div class="alert alert-danger">{{ $message }} </div>
                     @enderror
+                {{-- switch for manage project image--}}
+                <div class="form-check form-switch mb-3">
+                    <input class="form-check-input" type="checkbox" role="switch" id="set_image" name="set_image" value="1" @if($project->image) checked @endif>
+                    <label class="form-check-label" for="set_image">Edit project image</label>
+                </div>
 
-                <div class="mb-3"  id="image-input-container">
+                <div class="mb-3 @if(!$project->image) d-none @endif"  id="image-input-container">
                     {{-- preview loaded image--}}
                     <div class="preview">  {{-- @if(!$project->image) d-none @endif --}}
                         <img id="file-image-preview" @if($project->image) src="{{ asset('storage/' . $project->image) }}" @endif>
