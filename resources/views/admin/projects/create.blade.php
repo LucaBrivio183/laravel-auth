@@ -4,8 +4,9 @@
     <div class="container my-5">
         <a href="{{ route('admin.projects.index') }}" class="btn btn-primary mb-3">My Projects</a>
         <h1 class="mb-3">Create a new project</h1>
-        <form action="{{route('admin.projects.store')}}" method="POST">
+        <form action="{{route('admin.projects.store')}}" method="POST" enctype="multipart/form-data">
         @csrf
+
             <div class="form-group">
                 <div class="input-group mb-3">
                     <span class="input-group-text">Project name</span>
@@ -27,15 +28,23 @@
                     @error('patch_version')
                         <div class="alert alert-danger">{{ $message }} </div>
                     @enderror
+                
+                <div class="mb-3">
+                    <label for="image" class="form-label">Image</label>
+                    <input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image">
+                </div>
+                @error('image')
+                        <div class="alert alert-danger">{{ $message }} </div>
+                @enderror
+
                 <div class="mb-3">
                     <label for="description" class="form-label">Project description</label>
-                    <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="3">
-                        {{ old('description') }}
-                    </textarea>
+                    <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="3">{{ old('description') }}</textarea>
                     @error('description')
                         <div class="alert alert-danger">{{ $message }} </div>
                     @enderror
                 </div>
+
             </div> 
             <button type="submit" class="btn btn-primary">Create</button>
         </form>

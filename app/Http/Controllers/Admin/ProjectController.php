@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProjectController extends Controller
@@ -43,7 +44,11 @@ class ProjectController extends Controller
 
         $project = new Project();
         $project->fill($data);
+
         $project->slug = Str::slug($project->name, '-');
+        if (isset($data['image'])) {
+            $project->image = Storage::put('uploads', $data['image']);
+        }
         $project->save();
 
         return to_route('admin.projects.index');
