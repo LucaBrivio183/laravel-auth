@@ -19,7 +19,7 @@
 
                     {{-- {{ __('You are logged in!') }} --}}
 
-                    <a href="{{ route ('admin.projects.index')}}">my projects</a>
+                    <h1><a href="{{ route ('admin.projects.index')}}">My projects</a></h1>
                 </div>
             </div>
         </div>
